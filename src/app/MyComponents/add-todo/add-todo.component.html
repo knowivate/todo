@@ -1,0 +1,113 @@
+<div
+  class="modal fade"
+  id="addTodoModal"
+  tabindex="-1"
+  aria-labelledby="addTodoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTodoModalLabel">Add Task</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)">
+          <div class="form-group">
+            <div class="mb-3">
+              <select
+                class="form-select"
+                ngModel
+                name="status"
+                #iStatus="ngModel"
+                required
+              >
+                <option disabled>Select a value</option>
+                <option value="todo">Todo</option>
+                <option value="doing">Doing</option>
+                <option value="done">Done</option>
+              </select>
+              <div
+                class="mb-3 alert alert-danger"
+                *ngIf="iStatus.touched && iStatus.invalid"
+              >
+                <div *ngIf="iStatus.errors?.['required']">
+                  please select an option
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="title" class="col-form-label">Title:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                ngModel
+                name="title"
+                #iTitle="ngModel"
+                required
+                pattern="^[a-zA-Z ]*$"
+              />
+
+              <div
+                class="mb-3 alert alert-danger"
+                *ngIf="iTitle.touched && iTitle.invalid"
+              >
+                <div *ngIf="iTitle.errors?.['required']">
+                  please enter the title
+                </div>
+
+                <div *ngIf="iTitle.errors?.['pattern']">
+                  please enter only alphabets
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="col-form-label"
+                >Description:</label
+              >
+              <textarea
+                class="form-control"
+                id="description"
+                ngModel
+                name="description"
+                #iDescription="ngModel"
+                required
+                minlength="25"
+              ></textarea>
+
+              <div
+                class="mb-3 alert alert-danger"
+                *ngIf="iDescription.touched && iDescription.invalid"
+              >
+                <div *ngIf="iDescription.errors?.['required']">
+                  please enter the description
+                </div>
+
+                <div *ngIf="iDescription.errors?.['minlength']">
+                  please enter at least 25 characters
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                [disabled]="myForm.invalid"
+              >
+                Add Task
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

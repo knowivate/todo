@@ -1,0 +1,290 @@
+<!-- modal -->
+<app-add-todo (todoAdd)="addTodo($event)"></app-add-todo>
+
+<!-- modal edit to do -->
+<div
+  class="modal fade"
+  id="editTodo"
+  tabindex="-1"
+  aria-labelledby="editTodoLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editTodoLabel">
+          Edit Task {{ editTask?.sno }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #myForm="ngForm" (ngSubmit)="onSubmitEditTaskForm(myForm.value)">
+          <div class="form-group">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="sno"
+                [ngModel]="editTask?.sno"
+                name="sno"
+                #eSno="ngModel"
+                required
+                hidden
+              />
+            </div>
+            <div class="mb-3">
+              <select
+                class="form-select"
+                [ngModel]="editTask?.status"
+                name="status"
+                #eStatus="ngModel"
+                required
+              >
+                <option disabled>Select a value</option>
+                <option value="todo">Todo</option>
+                <option value="doing">Doing</option>
+                <option value="done">Done</option>
+              </select>
+              <div
+                class="mb-3 alert alert-danger"
+                *ngIf="eStatus.touched && eStatus.invalid"
+              >
+                <div *ngIf="eStatus.errors?.['required']">
+                  please select an option
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="title" class="col-form-label">Title:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                [ngModel]="editTask?.title"
+                name="title"
+                #eTitle="ngModel"
+                required
+                pattern="^[a-zA-Z ]*$"
+              />
+
+              <div
+                class="mb-3 alert alert-danger"
+                *ngIf="eTitle.touched && eTitle.invalid"
+              >
+                <div *ngIf="eTitle.errors?.['required']">
+                  please enter the title
+                </div>
+
+                <div *ngIf="eTitle.errors?.['pattern']">
+                  please enter only alphabets
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="col-form-label"
+                >Description:</label
+              >
+              <textarea
+                class="form-control"
+                id="description"
+                [ngModel]="editTask?.description"
+                name="description"
+                #eDescription="ngModel"
+                required
+                minlength="25"
+              ></textarea>
+
+              <div
+                class="mb-3 alert alert-danger"
+                *ngIf="eDescription.touched && eDescription.invalid"
+              >
+                <div *ngIf="eDescription.errors?.['required']">
+                  please enter the description
+                </div>
+
+                <div *ngIf="eDescription.errors?.['minlength']">
+                  please enter at least 25 characters
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="d-flex justify-content-between"></div>
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+                (click)="onClickDelete(editTask?.sno)"
+              >
+                Delete Task
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                [disabled]="myForm.invalid"
+              >
+                Edit Task
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal edit to do end -->
+
+<div class="container text-center my-3">
+  <div class="row align-items-start">
+    <div class="col border rounded mx-2 my-2" style="min-width: 320px">
+      <div class="d-flex justify-content-between">
+        <h2 class="my-2">To Do</h2>
+        <div class="d-flex align-items-center">
+          <button
+            class="btn btn-success btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#addTodoModal"
+          >
+            Add Task
+          </button>
+        </div>
+      </div>
+      <hr />
+      <div
+        cdkDropList
+        #todoList="cdkDropList"
+        [cdkDropListData]="todos"
+        [cdkDropListConnectedTo]="[doingList, doneList]"
+        class="my-2"
+        id="todo"
+        (cdkDropListDropped)="onDrop($event)"
+      >
+        <div *ngFor="let todo of todos; index as i">
+          <div *ngIf="todo.status === 'todo'">
+            <div
+              class="border rounded my-2 text-start p-2 bg-white"
+              cdkDrag
+              [cdkDragData]="todo"
+            >
+              <h4>{{ todo.title }}</h4>
+              <p>{{ todo.description }}</p>
+              <button
+                class="btn btn-primary btn-sm mx-2"
+                data-bs-toggle="modal"
+                data-bs-target="#editTodo"
+                (click)="onClickEdit(todo)"
+              >
+                Edit Task
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!isFound(todos, 'todo')" class="alert alert-info">
+          Enjoy! you have no task to complete!
+        </div>
+      </div>
+    </div>
+    <div class="col border rounded mx-2 my-2" style="min-width: 320px">
+      <div class="d-flex justify-content-between">
+        <h2 class="my-2">Doing</h2>
+        <div class="d-flex align-items-center">
+          <button
+            class="btn btn-success btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#addTodoModal"
+          >
+            Add Task
+          </button>
+        </div>
+      </div>
+      <hr />
+      <div
+        cdkDropList
+        #doingList="cdkDropList"
+        [cdkDropListData]="todos"
+        [cdkDropListConnectedTo]="[todoList, doneList]"
+        class="my-2"
+        id="doing"
+        (cdkDropListDropped)="onDrop($event)"
+      >
+        <div *ngFor="let todo of todos; index as i">
+          <div *ngIf="todo.status === 'doing'">
+            <div
+              class="border rounded my-2 text-start p-2 bg-white"
+              cdkDrag
+              [cdkDragData]="todo"
+            >
+              <h4>{{ todo.title }}</h4>
+              <p>{{ todo.description }}</p>
+              <button
+                class="btn btn-primary btn-sm mx-2"
+                data-bs-toggle="modal"
+                data-bs-target="#editTodo"
+                (click)="onClickEdit(todo)"
+              >
+                Edit Task
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!isFound(todos, 'doing')" class="alert alert-info">
+          0 Doing task exist!
+        </div>
+      </div>
+    </div>
+    <div class="col border rounded mx-2 my-2" style="min-width: 320px">
+      <div class="d-flex justify-content-between">
+        <h2 class="my-2">Done</h2>
+        <div class="d-flex align-items-center">
+          <button
+            class="btn btn-success btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#addTodoModal"
+          >
+            Add Task
+          </button>
+        </div>
+      </div>
+      <hr />
+      <div
+        cdkDropList
+        #doneList="cdkDropList"
+        [cdkDropListData]="todos"
+        [cdkDropListConnectedTo]="[todoList, doingList]"
+        class="my-2"
+        id="done"
+        (cdkDropListDropped)="onDrop($event)"
+      >
+        <div *ngFor="let todo of todos; index as i">
+          <div *ngIf="todo.status === 'done'">
+            <div
+              class="border rounded my-2 text-start p-2 bg-white"
+              cdkDrag
+              [cdkDragData]="todo"
+            >
+              <h4>{{ todo.title }}</h4>
+              <p>{{ todo.description }}</p>
+              <button
+                class="btn btn-primary btn-sm mx-2"
+                data-bs-toggle="modal"
+                data-bs-target="#editTodo"
+                (click)="onClickEdit(todo)"
+              >
+                Edit Task
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!isFound(todos, 'done')" class="alert alert-info">
+          You have 0 Done task.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

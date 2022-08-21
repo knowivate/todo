@@ -1,0 +1,187 @@
+<div class="px-5 mb-2 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">About Todo</h1>
+    <p class="col-md-8 fs-4">
+      By using Todo you can easily manage your tasks. In Todo you can Add new
+      Task, Edit existing or Delete added Tasks.
+    </p>
+    <a class="btn btn-primary btn-lg" type="button" routerLink="/"
+      >Start using Todo</a
+    >
+  </div>
+</div>
+
+<div class="px-5 mb-4 bg-light rounded-3">
+  <h1 id="todo">Todo</h1>
+  <h2 id="versions">Versions</h2>
+  <p>
+    This project was generated with
+    <a href="https://github.com/angular/angular-cli">Angular CLI</a> version
+    14.1.3. and Bootstrap version 5.2
+  </p>
+  <h2 id="build">Build</h2>
+  <p>
+    Run <code>ng build</code> to build the project. The build artifacts will be
+    stored in the <code>dist/</code> directory.
+  </p>
+  <hr />
+  <h2 id="problem-statement">Problem Statement</h2>
+  <ul>
+    <li>
+      <p>
+        Simple page which has 3 column lists and each column will contain
+        multiple cards. (<code>Bootstrap is used for design</code>)
+      </p>
+    </li>
+    <li>
+      <p>
+        The order of the cards should be maintained. Even after refresh (<code
+          >LocalStorage is used to Store &amp; Maintain the Data</code
+        >)
+      </p>
+    </li>
+    <li><p>The card should show a title and a description.</p></li>
+    <li><p>There should be a button at the top to add a new card.</p></li>
+    <li>
+      <strong><em>(Bonus Point)</em></strong> User should be able to move a card
+      from one column to another by drag and drop. (<code
+        >User can drag &amp; drop card from one column to another column. Here
+        @angular/cdk/drag-drop Library is used.</code
+      >)
+    </li>
+  </ul>
+  <hr />
+  <h3 id="add-card">Add Card</h3>
+  <ul>
+    <li>
+      <p>
+        On clicking the add card button, a modal popup should be shown with a
+        form.
+      </p>
+    </li>
+    <li>
+      <p>
+        The form should contain title, description and column selection
+        dropdown.
+      </p>
+    </li>
+    <li>
+      <p>
+        Title should be validated and should only contain alphabets. (<code
+          >Proactive and Reactive Form Validation approach is used. Only
+          alphabets inputs allowed</code
+        >)
+      </p>
+    </li>
+    <li>
+      <p>
+        Description should be validated and should be minimum 25 characters.
+        (<code>Atleast 25 character required</code>)
+      </p>
+    </li>
+    <li>
+      <p>
+        On submit, the card should be added to the end of the selected column.
+        (<code>Card is being added to the end of the Selected Column.</code>)
+      </p>
+    </li>
+  </ul>
+  <hr />
+  <h3 id="edit-card">Edit Card</h3>
+  <ul>
+    <li>
+      <p>
+        On clicking a card, the add card modal popup should be shown with the
+        add card form with the pre-filled data. (<code
+          >Showing edit card with pre-filled data</code
+        >)
+      </p>
+    </li>
+    <li>
+      <p>
+        If the user changes the column then, the card should be added to the end
+        of the selected column. (<code
+          >If the User makes changes in the Card, it is shown at the end of the
+          Column</code
+        >)
+      </p>
+    </li>
+    <li>
+      <p>
+        There should be a button to delete the card in the popup. (<code
+          >There is a Delete Button in the Pop-up of the Edit Card from which
+          the card can be Deleted</code
+        >)
+      </p>
+    </li>
+  </ul>
+  <hr />
+  <h2 id="instructions">Instructions</h2>
+  <ul>
+    <li>
+      <p>
+        Use simple bootstrap components (additional libraries and css can be
+        used but does not have any weightage in the review).
+      </p>
+    </li>
+    <li>
+      <p>
+        Angular should be used and the codebase should be AOT compilable. (<code
+          >Angular is used, version 14.1.3</code
+        >)
+      </p>
+    </li>
+    <li>
+      <p>
+        Host the resulting web-page as a simple website in a github.io page or
+        any other static host. (<code
+          >Hosted in netlify:
+          https://todoprojectofkheersagarpatel.knowivate.com/</code
+        >)
+      </p>
+    </li>
+    <li>
+      <p>
+        The codebase should be hosted in a public git repository.
+        (<code>https://github.com/knowivate/todo</code>)
+      </p>
+    </li>
+  </ul>
+  <hr />
+  <h2 id="deliverables">Deliverables</h2>
+  <ul>
+    <li>
+      <p>
+        Link to the static hosted page.
+        <a href="https://todoprojectofkheersagarpatel.knowivate.com/"
+          >https://todoprojectofkheersagarpatel.knowivate.com/</a
+        >
+      </p>
+    </li>
+    <li>
+      <p>
+        Link to the public git repository.
+        <a href="https://github.com/knowivate/todo"
+          >https://github.com/knowivate/todo</a
+        >
+      </p>
+    </li>
+    <li>
+      <p>
+        Documentation (On Webpage)
+        <a href="https://todoprojectofkheersagarpatel.knowivate.com/about"
+          >https://todoprojectofkheersagarpatel.knowivate.com/about</a
+        >
+      </p>
+    </li>
+    <li>
+      <p>
+        Documentation (On GitHub)
+        <a href="https://github.com/knowivate/todo#readme"
+          >https://github.com/knowivate/todo#readme</a
+        >
+      </p>
+    </li>
+  </ul>
+  <hr />
+</div>
